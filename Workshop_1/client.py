@@ -61,7 +61,7 @@ def main():
             gameChosen = int(gameChosen)
                 
             machine.AddGame(catalog.FromIndextoGame(gameChosen))
-            print(f"Ha sido añadido {gameChosen} a la maquina... Presione enter para continuar")
+            print(f"Ha sido añadido {catalog.FromIndextoGame(gameChosen)} a la maquina... Presione enter para continuar")
             input()
             utilities.ClearConsole()
             
@@ -73,14 +73,49 @@ def main():
             print(f"Los datos de usuario ingresados son los siguientes:\n\n-Nombre: {customer.name}\n-Dirección: {customer.address}")
             
             finalization = input("¿Desea finalizar la compra? (1.SI / 2.NO): ")
-            
-        
-            
-            
-        
+            while not finalization.isdigit() or int(finalization) not in range (1, 3):
+                print("\n\nError: Por favor ingresa una opción valida.")
+                input("\n\nPresione enter para continuar...")
+                utilities.ClearConsole()
+                finalization = input("¿Desea finalizar la compra? (1.SI / 2.NO): ")
                 
+            finalization = int(finalization)
             
+            if finalization == 1:
+                if machine.material is None:
+                    print("¡Por favor ingrese un material de fabricación para su maquina arcade!")
+                    input("Presione enter para continuar...")
+                    utilities.ClearConsole()
+                    continue
+                else:
+                    print("--¡TU MAQUINA ARCADE HA SIDO ENVIADA A TU DIRECCIÓN CON EXITO!--")
+                    print(f"\nEl material de tu máquina arcade es: {machine.material}.\n")
+                    print(f"Los juegos añadidos a tu máquina arcade son: ")
+                    machine.ShowChosenGames()
+                    input("\n\nPresiona enter para continuar...")
+                    
+                    repeat = input("¿Desea realizar otra compra? (1.SI / 2.NO): ")
+                    while not repeat.isdigit() or int(repeat) not in range (1, 3):
+                        print("\n\nError: Por favor ingresa una opción valida.")
+                        input("\n\nPresione enter para continuar...")
+                        utilities.ClearConsole()
+                        repeat = input("¿Desea realizar otra compra? (1.SI / 2.NO): ")
+                
+                    repeat = int(finalization)
+                    
+                    if repeat == 1:
+                        machine = ArcadeMachine()
+                        catalog = GameCatalog()
+                        customer = Customer()
+                        continue
+                    else:
+                        break
+            else:
+                utilities.ClearConsole()
+                continue
             
-        
+        elif option == 4:
+            break
+                        
 if __name__ == "__main__":
     main()

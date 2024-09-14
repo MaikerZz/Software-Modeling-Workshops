@@ -34,6 +34,15 @@ class ArcadeMachine ():
                         input()
                 else:
                         self.gamesadded.append(game)
+                        
+        def ShowChosenGames (self):
+                counter = 0
+                if len(self.gamesadded) > 0:
+                        for game in self.gamesadded:
+                                counter += 1
+                                print(f"{counter}. {game}.")
+                else:
+                        print("La lista de juegos está vacia.")
                 
 
 class GameCatalog ():
