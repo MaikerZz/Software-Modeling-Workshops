@@ -6,7 +6,7 @@ Author: Maiker Alejandro Hernández <mahernandeza@udistrital.edu.co>
 this file is part of Workshops.
 
 Arcade Machine Seller is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either versio 3 of the License, or (at your opinion) any later version.
+published by the Free Software Foundation, either version 3 of the License, or (at your opinion) any later version.
 
 Arcade Machine Seller is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY... ; without even the implied warranty 
 of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -23,6 +23,7 @@ class ArcadeMachine ():
         def __init__(self): 
                 self.material = None
                 self.gamesadded = []
+                self.extraaccesories = ExtraAccesories()
         
         def  SelectMaterial (self, material: str):
                 """
@@ -77,6 +78,39 @@ class ArcadeMachine ():
                                 print(f"{counter}. {game}.")
                 else:
                         print("La lista de juegos está vacia.")
+                        
+        def AddAccessory(self, accessory: str):
+                """
+                This method adds an accessory to the arcade machine.
+                
+                Args:
+                accessory (str): The name of the accessory to be added.
+                
+                Returns:
+                None.
+                """
+                self.extraAccesories.AddAccessory(accessory)
+                
+        def RemoveAccessory(self, accessory: str):
+                """
+                This method removes an accessory from the arcade machine.
+                
+                Args:
+                accessory (str): The name of the accessory to be removed.
+                
+                Returns:
+                None.
+                """
+                self.extraAccesories.RemoveAccessory(accessory)
+                
+        def ShowAccessories(self):
+                """
+                This method displays the current status of all accessories.
+                
+                Returns:
+                None.
+                """
+                self.extraAccesories.ShowAccessories()
                 
 
 class GameCatalog ():
@@ -135,6 +169,83 @@ class Customer ():
                 """
                 self.name = name
                 self.address = address
+                
+class ExtraAccesories:
+        """
+        It represents the extra accessories available for the arcade machine.
+        """
+    
+        def __init__(self):
+                self.screenProtector = False
+                self.drinksHolder = False
+                self.ledLights = False
+                self.coolingSystem = False
+                self.cleaningKit = False
+                self.extensionCable = False
+
+        def AddAccessory(self, accessory: int):
+                """
+                This method adds an accessory to the arcade machine.
+                
+                Args:
+                accessory (str): The name of the accessory to be added.
+                
+                Returns:
+                None.
+                """
+        
+                if accessory == "screenProtector":
+                        self.screenProtector = True
+                elif accessory == "drinksHolder":
+                        self.drinksHolder = True
+                elif accessory == "ledLights":
+                        self.ledLights = True
+                elif accessory == "coolingSystem":
+                        self.coolingSystem = True
+                elif accessory == "cleaningKit":
+                        self.cleaningKit = True
+                elif accessory == "extensionCable":
+                        self.extensionCable = True
+
+        def RemoveAccessory(self, accessory: str):
+                """
+                This method removes an accessory from the arcade machine.
+                
+                Args:
+                accessory (str): The name of the accessory to be removed.
+                
+                Returns:
+                None.
+                """
+                
+                if accessory == "screenProtector":
+                        self.screenProtector = False
+                elif accessory == "drinksHolder":
+                        self.drinksHolder = False
+                elif accessory == "ledLights":
+                        self.ledLights = False
+                elif accessory == "coolingSystem":
+                        self.coolingSystem = False
+                elif accessory == "cleaningKit":
+                        self.cleaningKit = False
+                elif accessory == "extensionCable":
+                        self.extensionCable = False
+
+        def ShowAccessories(self):
+                """
+                This method displays the current status of all accessories.
+                
+                Returns:
+                None.
+                """
+                
+                print(f"Protector de pantalla: {'SI.' if self.screenProtector else 'NO.'}")
+                print(f"Portavasos: {'SI.' if self.drinksHolder else 'NO.'}")
+                print(f"Luces lED: {'SI.' if self.ledLights else 'NO.'}")
+                print(f"Sistema de refrigeración: {'SI.' if self.coolingSystem else 'NO.'}")
+                print(f"Kit de limpieza: {'SI.' if self.cleaningKit else 'NO.'}")
+                print(f"Cable de extensión: {'SI.' if self.extensionCable else 'NO.'}")
+
                 
 class Utilities ():
         def ClearConsole(self):
