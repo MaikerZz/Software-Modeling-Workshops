@@ -21,14 +21,38 @@ class ArcadeMachine ():
         """
         
         def __init__(self): 
-                """////////////////Investigar como paso la lista de juegos a esta clase."""
                 self.material = None
                 self.gamesadded = []
         
         def  SelectMaterial (self, material: str):
+                """
+                This method selects a material for the arcade machine.
+                
+                This method takes one argument, expected as a string, and sets the material for the arcade machine.
+                
+                Args:
+                  material (str): The material to be selected for the arcade machine.
+                  
+                Returns:
+                  None.
+                """
                 self.material = material
 
         def AddGame (self, game: str):
+                """
+                This method adds a game to the list of added games.
+                
+                This method takes one argument, expected as a string, and appends it to the list of games 
+                if it is not already present. If the game is already in the list, it prints a message indicating 
+                that the game is already in the list.
+                
+                Args:
+                  game (str): The game to be added to the list.
+                  
+                Returns:
+                  None.
+                """
+                
                 if game in self.gamesadded:
                         print("El juego ya se encuentra en la lista")
                         input()
@@ -36,6 +60,16 @@ class ArcadeMachine ():
                         self.gamesadded.append(game)
                         
         def ShowChosenGames (self):
+                """
+                This method displays the list of chosen games for the actual machine.
+                
+                This method iterates over the list of added games and prints each game with a corresponding number.
+                If the list of games is empty, it prints a message indicating that the list is empty.
+                  
+                Returns:
+                  None.
+                """
+                
                 counter = 0
                 if len(self.gamesadded) > 0:
                         for game in self.gamesadded:
@@ -56,12 +90,34 @@ class GameCatalog ():
                               "Scramble", "Galaga", "Tempest", "Dragon's lair", "1942", "Kung-fu master"]
                 
         def DisplayGames(self):
+                """
+                This method displays the list of available games.
+                
+                This method iterates over the list of available games and prints each game with a corresponding number.
+                
+                Returns:
+                  None.
+                """
+                
                 counter = 0
                 for game in self.games:
                         counter += 1
                         print(f"{counter}. {game}")
                         
         def FromIndextoGame(self, index: int) -> str:
+                """
+                This method retrieves a game from the list based on its index.
+                
+                This method takes one argument, expected as an integer, and returns the game corresponding to that index 
+                in the list of games.
+                
+                Args:
+                  index (int): The index of the game to retrieve (1-based).
+
+                Returns:
+                  str: The game at the specified index.
+                """
+                
                 return self.games[index - 1]
         
 class Customer ():
@@ -74,11 +130,20 @@ class Customer ():
                 self.address = None
                 
         def UpdateInformation (self, name: str, address: str):
+                """
+                This method updates the name and address information.
+                """
                 self.name = name
                 self.address = address
                 
 class Utilities ():
         def ClearConsole(self):
+                """
+                This method clears the console screen.
+                
+                This method detects the operating system and executes the appropriate command to clear the console.
+                On Windows, it uses the 'cls' command, and on other operating systems, it uses the 'clear' command.
+                """
                 if os.name == 'nt':
                         os.system('cls')
                 else:
