@@ -89,7 +89,7 @@ class ArcadeMachine ():
                 Returns:
                 None.
                 """
-                self.extraAccesories.AddAccessory(accessory)
+                self.extraaccesories.AddAccessory(accessory)
                 
         def RemoveAccessory(self, accessory: str):
                 """
@@ -110,7 +110,7 @@ class ArcadeMachine ():
                 Returns:
                 None.
                 """
-                self.extraAccesories.ShowAccessories()
+                self.extraaccesories.ShowAccessories()
                 
 
 class GameCatalog ():
@@ -194,20 +194,20 @@ class ExtraAccesories:
                 None.
                 """
         
-                if accessory == "screenProtector":
+                if accessory == 1:
                         self.screenProtector = True
-                elif accessory == "drinksHolder":
+                elif accessory == 2:
                         self.drinksHolder = True
-                elif accessory == "ledLights":
+                elif accessory == 3:
                         self.ledLights = True
-                elif accessory == "coolingSystem":
+                elif accessory == 4:
                         self.coolingSystem = True
-                elif accessory == "cleaningKit":
+                elif accessory == 5:
                         self.cleaningKit = True
-                elif accessory == "extensionCable":
+                elif accessory == 6:
                         self.extensionCable = True
 
-        def RemoveAccessory(self, accessory: str):
+        def RemoveAccessory(self, accessory: int):
                 """
                 This method removes an accessory from the arcade machine.
                 
@@ -218,17 +218,17 @@ class ExtraAccesories:
                 None.
                 """
                 
-                if accessory == "screenProtector":
+                if accessory == 1:
                         self.screenProtector = False
-                elif accessory == "drinksHolder":
+                elif accessory == 2:
                         self.drinksHolder = False
-                elif accessory == "ledLights":
+                elif accessory == 3:
                         self.ledLights = False
-                elif accessory == "coolingSystem":
+                elif accessory == 4:
                         self.coolingSystem = False
-                elif accessory == "cleaningKit":
+                elif accessory == 5:
                         self.cleaningKit = False
-                elif accessory == "extensionCable":
+                elif accessory == 6:
                         self.extensionCable = False
 
         def ShowAccessories(self):
