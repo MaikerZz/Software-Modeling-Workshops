@@ -11,4 +11,4 @@ This project is the first workshop for the Software Modeling I course. The goal 
 - **Finalization of Purchase**: Customers can input their personal information (name and address) to complete the purchase, and the selected material and games are confirmed for delivery.
 
 ##Aditional Functionalities
-Based on the feedback from students, extra features were also considered, as allowing users to view additional accessories for their machines, like LED lights and screen protectors.s
+Based on the feedback from students, extra features were also considered, as allowing users to view additional accessories for their machines, like LED lights and screen protectors.
