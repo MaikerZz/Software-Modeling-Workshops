@@ -101,7 +101,7 @@ class ArcadeMachine ():
                 Returns:
                 None.
                 """
-                self.extraAccesories.RemoveAccessory(accessory)
+                self.extraaccesories.RemoveAccessory(accessory)
                 
         def ShowAccessories(self):
                 """
