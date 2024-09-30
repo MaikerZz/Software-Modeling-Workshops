@@ -42,12 +42,8 @@ class main():
             print(MENU_RACING_MACHINE)
         elif isinstance(self.machine, VirtualRealityMachine):
             print(MENU_VIRTUAL_REALITY_MACHINE)
-            
-    def handle_menu(self, option:int):
-        if option == 1 or option == 2 or option == 3 or option == 4 or option == 5:
-            self.handle_general_menu(option)
         
-    def handle_general_menu(self, option:int):
+    def handle_menu(self, option:int):
         if option == 1:
             print("Choose the material:\n\n-Wood.\n-Aluminium.\n-Carbon fiber.")
             material = input("Enter the desired material: ")
@@ -66,8 +62,24 @@ class main():
             utilities.ClearConsole()
             
         elif option == 2:
-            pass  # ESTO HAY QUE CAMBIARLO SI O SI
-        
+            print("Choose a game from the catalog:\n\n")
+            catalog.SetGames(self.machine)
+            catalog.DisplayGames()
+            numberofgames = catalog.GetNumberOfGames()
+            gamechosen = input(f"Choose the index of a game from the catalog: ")
+            while not gameChosen.isdigit() or int(gameChosen) not in range (1, numberofgames + 1):
+                print("\n\nError: Please enter a valid number.")
+                input("\n\nPress enter to continue...")
+                utilities.ClearConsole()
+                catalog.DisplayGames()
+                gameChosen = input("Select the index of a game from the catalog: ")
+                
+            gameChosen = int(gameChosen) #Parse the input to an integer
+            machine.AddGame(catalog.FromIndextoGame(gameChosen)) # Add the selected game to the machine
+            print(f"{catalog.FromIndextoGame(gameChosen)} has been added to the machine... Press enter to continue")
+            input()
+            utilities.ClearConsole()
+            
         elif option == 3:
             print("Manage additional accessories:\n-1- Add accessory.\n-2- Remove accessory.\n-3- Show accessories.\n-4- Return to main menu.")
             accessoryOption = input("Choose an option: ") #COMPLETAR LOGICA...

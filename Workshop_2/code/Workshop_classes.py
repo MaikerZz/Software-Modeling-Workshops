@@ -407,9 +407,7 @@ class GameCatalog ():
         """
         
         def __init__(self):
-                self.games = ["Space invaders", "Tetris", "Donkey Kong", "Street Fighter II", "Metal Slug",
-                              "Ghosts 'n Goblins", "OutRun", "Double Dragon", "Asteroids", "Galaxian", "Frogger",
-                              "Scramble", "Galaga", "Tempest", "Dragon's lair", "1942", "Kung-fu master"]
+                self.games = []
                 
         def DisplayGames(self):
                 """
@@ -426,6 +424,57 @@ class GameCatalog ():
                         counter += 1
                         print(f"{counter}. {game}")
                         
+        def SetGames(self, machine: ArcadeMachine):
+            """
+            This method sets the games for the arcade machine based on its type.
+            
+            Args:
+            machine (ArcadeMachine): The arcade machine instance to set games for.
+            
+            Returns:
+            None.
+            """
+            
+            if isinstance(machine, DanceRevolutionMachine):
+                games = [
+                    "Dance Dance Revolution", "Pump It Up", "In The Groove", 
+                    "StepMania", "Just Dance", "Dance Central", 
+                    "ParaParaParadise", "Dance Evolution", "Dance Factory", 
+                    "Technomotion", "Dance Dance Revolution SuperNova", "Dance Dance Revolution X", 
+                    "Dance Dance Revolution Extreme", "Dance Dance Revolution A", "Dance Dance Revolution 5th Mix"
+                ]
+            elif isinstance(machine, ClassicalArcadeMachine):
+                games = [
+                    "Pac-Man", "Donkey Kong", "Space Invaders", "Galaga", "Asteroids", 
+                    "Centipede", "Defender", "Frogger", "Joust", "Missile Command", 
+                    "Q*bert", "Robotron: 2084", "Dig Dug", "BurgerTime", "Tempest"
+                ]
+            elif isinstance(machine, ShottingMachine):
+                games = [
+                    "Time Crisis", "House of the Dead", "Virtua Cop", "Silent Scope", "Point Blank", 
+                    "Lethal Enforcers", "Area 51", "Big Buck Hunter", "Operation Wolf", "Police Trainer", 
+                    "CarnEvil", "Jurassic Park Arcade", "Aliens: Extermination", "Rambo", "Ghost Squad", 
+                    "Terminator Salvation", "Mad Dog McCree"]
+            elif isinstance(machine, RacingMachine):
+                games = [
+                    "Daytona USA", "Cruis'n USA", "OutRun", "Ridge Racer", "Sega Rally Championship", 
+                    "Initial D Arcade Stage", "Mario Kart Arcade GP", "F-Zero AX", "Need for Speed: Underground", 
+                    "Hydro Thunder", "Midnight Club", "Burnout", "Crazy Taxi", "Wangan Midnight Maximum Tune", 
+                    "Fast & Furious: SuperCars"
+                ]
+            elif isinstance(machine, VirtualRealityMachine):
+                games = ["Beat Saber", "Superhot VR", "Half-Life: Alyx"
+                "Arizona Sunshine", "The Walking Dead: Saints & Sinners", "No Man's Sky VR", 
+                "Star Wars: Squadrons", "The Elder Scrolls V: Skyrim VR", "Resident Evil 7: Biohazard", 
+                "Boneworks", "Pavlov VR", "Job Simulator", "Moss", 
+                "Astro Bot Rescue Mission", "Vader Immortal"]
+            else:
+                games = []
+            
+            for game in games:
+                machine.AddGame(game)
+            
+                        
         def FromIndextoGame(self, index: int) -> str:
                 """
                 This method retrieves a game from the list based on its index.
@@ -441,6 +490,16 @@ class GameCatalog ():
                 """
                 
                 return self.games[index - 1]
+            
+        def GetNumberOfGames(self) -> int:
+                """
+                This method returns the number of games in the list.
+                
+                Returns:
+                  int: The number of games in the list.
+                """
+                
+                return len(self.games)
         
 class Customer ():
         """
