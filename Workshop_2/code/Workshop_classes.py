@@ -63,78 +63,121 @@ class ArcadeMachine ():
                       
 
         def AddGame (self, game: str):
-                """
-                This method adds a game to the list of added games.
-                
-                This method takes one argument, expected as a string, and appends it to the list of games 
-                if it is not already present. If the game is already in the list, it prints a message indicating 
-                that the game is already in the list.
-                
-                Args:
-                  game (str): The game to be added to the list.
+            """
+            This method adds a game to the list of added games.
+            
+            This method takes one argument, expected as a string, and appends it to the list of games 
+            if it is not already present. If the game is already in the list, it prints a message indicating 
+            that the game is already in the list.
+            
+            Args:
+            game (str): The game to be added to the list.
                   
-                Returns:
-                  None.
-                """
+            Returns:
+            None.
+            """
                 
-                if game in self.gamesadded:
-                        print("El juego ya se encuentra en la lista")
-                        input()
-                else:
-                        self.gamesadded.append(game)
-                        self.base_price += 2
+            if game in self.gamesadded:
+                print("The game is already in the list.")
+                input()
+            else:
+                self.gamesadded.append(game)
+                self.base_price += 2
+                        
+        def RemoveGame (self, game: str):
+            """
+            This method removes a game from the list of added games.
+            
+            This method takes one argument, expected as a string, and removes it from the list of games 
+            if it is present. If the game is not in the list, it prints a message indicating that the game 
+            is not in the list.
+            
+            Args:
+            game (str): The game to be removed from the list.
+                  
+            Returns:
+            None.
+            """
+                
+            if game in self.gamesadded:
+                self.gamesadded.remove(game)
+                self.base_price -= 2
+            else:
+                print("The game is not in the list.")
+                input()
                         
         def ShowChosenGames (self):
-                """
-                This method displays the list of chosen games for the actual machine.
+            """
+            This method displays the list of chosen games for the actual machine.
+            
+            This method iterates over the list of added games and prints each game with a corresponding number.
+            If the list of games is empty, it prints a message indicating that the list is empty.
+              
+            Returns:
+              None.
+            """
                 
-                This method iterates over the list of added games and prints each game with a corresponding number.
-                If the list of games is empty, it prints a message indicating that the list is empty.
-                  
-                Returns:
-                  None.
-                """
-                
-                counter = 0
-                if len(self.gamesadded) > 0:
-                        for game in self.gamesadded:
-                                counter += 1
-                                print(f"{counter}. {game}.")
-                else:
-                        print("La lista de juegos está vacia.")
+            counter = 0
+            if len(self.gamesadded) > 0:
+                for game in self.gamesadded:
+                    counter += 1
+                    print(f"{counter}. {game}.")
+            else:
+                print("The list of games is empty.")
                         
         def AddAccessory(self, accessory: str):
-                """
-                This method adds an accessory to the arcade machine.
+            """
+            This method adds an accessory to the arcade machine.
                 
-                Args:
-                accessory (str): The name of the accessory to be added.
+            Args:
+            accessory (str): The name of the accessory to be added.
                 
-                Returns:
-                None.
-                """
-                self.extraaccesories.AddAccessory(accessory)
+            Returns:
+            None.
+            """
+            self.extraaccesories.AddAccessory(accessory)
                 
         def RemoveAccessory(self, accessory: str):
-                """
-                This method removes an accessory from the arcade machine.
-                
-                Args:
-                accessory (str): The name of the accessory to be removed.
-                
-                Returns:
-                None.
-                """
-                self.extraAccesories.RemoveAccessory(accessory)
+            """
+            This method removes an accessory from the arcade machine.
+            
+            Args:
+            accessory (str): The name of the accessory to be removed.
+            
+            Returns:
+            None.
+            """
+            self.extraAccesories.RemoveAccessory(accessory)
                 
         def ShowAccessories(self):
-                """
-                This method displays the current status of all accessories.
+            """
+            This method displays the current status of all accessories.
+            
+            Returns:
+            None.
+            """
+            self.extraaccesories.ShowAccessories()
                 
-                Returns:
-                None.
-                """
-                self.extraaccesories.ShowAccessories()
+        def GetNumberOfAccessories(self):
+            """
+            This method returns the number of accessories in the list.
+            
+            Returns:
+            int: The number of accessories in the list.
+            """
+            return len(self.extraaccesories.accessories)
+        
+        def GetAccesoryName(self, index: int) -> str:
+            """
+            This method retrieves an accessory from the list based on its index.
+            
+            Args:
+            index (int): The index of the accessory to retrieve (1-based).
+            
+            Returns:
+            str: The accessory at the specified index.
+            """
+            return self.extraaccesories.accessories[index - 1]
             
             
         def SetEnergyConsumption(self, energyconsumption: float):
@@ -230,9 +273,6 @@ class DanceRevolutionMachine (ArcadeMachine):
         Returns:
         None.
         """
-        while arrowCardinalities != 4 and arrowCardinalities != 8:
-            print("El número de cardinalidades debe ser 4 o 8.")
-            arrowCardinalities = int(input("Ingrese el número de cardinalidades: "))
         
         self.arrowCardinalities = arrowCardinalities
         
@@ -301,8 +341,8 @@ class ShottingMachine (ArcadeMachine):
         None.
         """
         while guns < 1:
-            print("Ingrese un número valido.")
-            guns = int(input("Ingrese el número de armas: "))
+            print("Enter a valid number.")
+            guns = int(input("Enter the number of guns: "))
             
         self.gunsNumber = guns
         
@@ -500,6 +540,7 @@ class GameCatalog ():
                 """
                 
                 return len(self.games)
+            
         
 class Customer ():
         """
@@ -523,76 +564,83 @@ class ExtraAccesories:
         """
     
         def __init__(self):
-                self.screenProtector = False
-                self.drinksHolder = False
-                self.ledLights = False
-                self.coolingSystem = False
-                self.cleaningKit = False
-                self.extensionCable = False
-
-        def AddAccessory(self, accessory: int):
-                """
-                This method adds an accessory to the arcade machine.
+                self.accessories = []
                 
-                Args:
-                accessory (str): The name of the accessory to be added.
+        def SetAvaliableAccessories(self, machine: ArcadeMachine):
+            if isinstance (machine, DanceRevolutionMachine):
+                self.accessories = ["Headphones", "Microphone", "Speakers", "Lights"]
                 
-                Returns:
-                None.
-                """
+            elif isinstance (machine, ClassicalArcadeMachine):
+                self.accessories = ["Joystick", "Buttons", "Trackball", "Spinner"]
+                
+            elif isinstance (machine, ShottingMachine):
+                self.accessories = ["Gun holster", "Gun strap", "Gun stand", "Gun case"]
+                
+            elif isinstance (machine, RacingMachine):
+                self.accessories = ["Steering wheel", "Pedals", "Gear shifter", "Seat"]
+                
+            elif isinstance (machine, VirtualRealityMachine):
+                self.accessories = ["Gloves", "Vest", "Boots", "Helmet"]
+                
+            else:
+                self.accessories = []
+                
+            for accesory in self.accessories:
+                setattr(self, accesory.replace(" ", ""), False)
+                
+        def AddAccessory(self, accesory: str):
+            """
+            This method adds an accessory to the arcade machine.
+            
+            Args:
+            accessory (str): The name of the accessory to be added.
+            
+            Returns:
+            None.
+            """
+            if accessory in self.accessories:
+                setattr(self, accessory.replace(" ", ""), True)
+            else:
+                print(f"Accessory {accessory} is not available for this machine, please try again.")
+                input()
+                
+        def RemoveAccessory(self, accessory: str):
+            """
+            This method removes an accessory from the arcade machine.
+            
+            Args:
+            accessory (str): The name of the accessory to be removed.
+            
+            Returns:
+            None.
+            """
+            if accessory in self.accessories:
+                setattr(self, accessory.replace(" ", ""), False)
+            else:
+                print(f"Accessory {accessory} is not available for this machine, please try again.")
+                input()
         
-                if accessory == 1:
-                        self.screenProtector = True
-                elif accessory == 2:
-                        self.drinksHolder = True
-                elif accessory == 3:
-                        self.ledLights = True
-                elif accessory == 4:
-                        self.coolingSystem = True
-                elif accessory == 5:
-                        self.cleaningKit = True
-                elif accessory == 6:
-                        self.extensionCable = True
-
-        def RemoveAccessory(self, accessory: int):
-                """
-                This method removes an accessory from the arcade machine.
-                
-                Args:
-                accessory (str): The name of the accessory to be removed.
-                
-                Returns:
-                None.
-                """
-                
-                if accessory == 1:
-                        self.screenProtector = False
-                elif accessory == 2:
-                        self.drinksHolder = False
-                elif accessory == 3:
-                        self.ledLights = False
-                elif accessory == 4:
-                        self.coolingSystem = False
-                elif accessory == 5:
-                        self.cleaningKit = False
-                elif accessory == 6:
-                        self.extensionCable = False
-
         def ShowAccessories(self):
-                """
-                This method displays the current status of all accessories.
-                
-                Returns:
-                None.
-                """
-                
-                print(f"Protector de pantalla: {'SI.' if self.screenProtector else 'NO.'}")
-                print(f"Portavasos: {'SI.' if self.drinksHolder else 'NO.'}")
-                print(f"Luces lED: {'SI.' if self.ledLights else 'NO.'}")
-                print(f"Sistema de refrigeración: {'SI.' if self.coolingSystem else 'NO.'}")
-                print(f"Kit de limpieza: {'SI.' if self.cleaningKit else 'NO.'}")
-                print(f"Cable de extensión: {'SI.' if self.extensionCable else 'NO.'}")
-
+            """
+            This method displays the current status of all accessories.
+            
+            Returns:
+            None.
+            """
+            for accessory in self.accessories:
+                print(f"{accessory}: {getattr(self, accessory.replace(' ', ''))}")
+            
+            
+            
+        def ShowAddedAccessories(self):
+            """
+            This method displays the current status of all accessories.
+            
+            Returns:
+            None.
+            """
+            for accessory in self.accessories:
+                print(f"{accessory}: {getattr(self, accessory.replace(' ', ''))}")
                 
 class Utilities ():
         def ClearConsole(self):

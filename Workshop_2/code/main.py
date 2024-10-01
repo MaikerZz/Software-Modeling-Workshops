@@ -25,6 +25,8 @@ class main():
     MENU_SHOTTING_MACHINE = "\n\n-----SHOTTING MACHINE MENU-----\n\n\n-1. Choose material.\n-2. Add/Quit game.\n-3. Add/Quit accessories.\n-4. Set memory\n-5. Set number of processors\n-6. Set guns number.\n-7. Set guns type.\n-8. Finish purchase.\n-9. Exit."
     MENU_RACING_MACHINE = "\n\n-----RACING MACHINE MENU-----\n\n\n-1. Choose material.\n-2. Add/Quit game.\n-3. Add/Quit accessories.\n-4. Set memory\n-5. Set number of processors\n-6. Set steering wheel type.\n-7. Finish purchase.\n-8. Exit."
     MENU_VIRTUAL_REALITY_MACHINE = "\n\n-----VIRTUAL REALITY MACHINE MENU-----\n\n\n-1. Choose material.\n-2. Add/Quit game.\n-3. Add/Quit accessories.\n-4. Set memory\n-5. Set number of processors\n-6. Set glass type\n-7. Set glass resolution\n-8. Finish purchase.\n-9. Exit."
+    MENU_ADD_QUIT_GAMES = "Select an option:\n\n-1- Add game.\n-2- Remove game.\n-3- Show games.\n-4- Return to main menu."
+    MENU_ACCESORIES ="Manage additional accessories:\n-1- Add accessory.\n-2- Remove accessory.\n-3- Show accessories.\n-4- Return to main menu."
     
     def choose_predeterminated_machine_menu(self):
         """This method displays the menu to choose a predeterminated arcade machine."""
@@ -61,29 +63,120 @@ class main():
             input()
             utilities.ClearConsole()
             
-        elif option == 2:
-            print("Choose a game from the catalog:\n\n")
-            catalog.SetGames(self.machine)
-            catalog.DisplayGames()
-            numberofgames = catalog.GetNumberOfGames()
-            gamechosen = input(f"Choose the index of a game from the catalog: ")
-            while not gameChosen.isdigit() or int(gameChosen) not in range (1, numberofgames + 1):
-                print("\n\nError: Please enter a valid number.")
+        elif option == 2: #ARREGLAR PARA AÑADIR Y QUITAR JUEGOS!!
+            print(MENU_ADD_QUIT_GAMES)
+            option = input("\n\nChoose an option: ")
+            while option not in range(1, 5) and not option.isdigit():
+                print("\n\nError: Please enter a valid option.")
                 input("\n\nPress enter to continue...")
                 utilities.ClearConsole()
-                catalog.DisplayGames()
-                gameChosen = input("Select the index of a game from the catalog: ")
+                print(MENU_ADD_QUIT_GAMES)
+                option = input("Choose an option: ")
                 
-            gameChosen = int(gameChosen) #Parse the input to an integer
-            machine.AddGame(catalog.FromIndextoGame(gameChosen)) # Add the selected game to the machine
-            print(f"{catalog.FromIndextoGame(gameChosen)} has been added to the machine... Press enter to continue")
-            input()
-            utilities.ClearConsole()
+            if option == 1: #Add game
+                print("Choose a game from the catalog:\n\n")
+                catalog.SetGames(self.machine)
+                catalog.DisplayGames()
+                numberofgames = catalog.GetNumberOfGames()
+                gamechosen = input(f"Choose the index of a game from the catalog: ")
+                while not gameChosen.isdigit() or int(gameChosen) not in range (1, numberofgames + 1):
+                    print("\n\nError: Please enter a valid number.")
+                    input("\n\nPress enter to continue...")
+                    utilities.ClearConsole()
+                    catalog.DisplayGames()
+                    gamechosen = input("Select the index of a game from the catalog: ")
+                
+                gameChosen = int(gameChosen) #Parse the input to an integer
+                machine.AddGame(catalog.FromIndextoGame(gamechosen)) # Add the selected game to the machine
+                print(f"{catalog.FromIndextoGame(gamechosen)} has been added to the machine... Press enter to continue")
+                input()
+                utilities.ClearConsole()
+                    
+            elif option == 2: #Remove game
+                print("Choose a game to remove from the machine:\n\n")
+                machine.ShowChosenGames()
+                gameChosen = input("Select the index of a game to remove from the machine: ")
+                while not gameChosen.isdigit() or int(gameChosen) not in range (1, machine.GetNumberOfGames() + 1):
+                    print("\n\nError: Please enter a valid number.")
+                    input("\n\nPress enter to continue...")
+                    utilities.ClearConsole()
+                    machine.ShowChosenGames()
+                    gameChosen = input("Select the index of a game to remove from the machine: ")
+                
+                gameChosen = int(gameChosen)
+                machine.RemoveGame(catalog.FromIndextoGame(gameChosen))
+                print(f"{catalog.FromIndextoGame(gameChosen)} has been removed from the machine... Press enter to continue")
+                input()
+                utilities.ClearConsole()
+                
+            elif option == 3: #Show games
+                print("Current games in the machine:\n")
+                machine.ShowChosenGames()
+                input("\n\nPress enter to continue...")
+                utilities.ClearConsole()
+                
+            elif option == 4:
+                utilities.ClearConsole()
+                continue
             
         elif option == 3:
-            print("Manage additional accessories:\n-1- Add accessory.\n-2- Remove accessory.\n-3- Show accessories.\n-4- Return to main menu.")
-            accessoryOption = input("Choose an option: ") #COMPLETAR LOGICA...
+            print(MENU_ACCESORIES)
+            accessoryOption = input("Choose an option: ")
+            while not accessoryOption.isdigit() or int(accessoryOption) not in range (1, 5):
+                print("\n\nError: Please enter a valid option.")
+                input("\n\nPress enter to continue...")
+                utilities.ClearConsole()
+                print(MENU_ACCESORIES)
+                accessoryOption = input("Choose an option: ")
+                
+            accessoryOption = int(accessoryOption)
+            utilities.ClearConsole()
             
+            if accessoryOption == 1:
+                print("Choose an accessory to add:")
+                machine.ShowAccessories()
+                accessory = input("\n\nEnter the index of the desired accessory: ")
+                while not accessory.isdigit() or int(accessory) not in range (1, machine.GetNumberOfAccessories() + 1):
+                    print("\n\nError: Please enter a valid number.")
+                    input("\n\nPress enter to continue...")
+                    utilities.ClearConsole()
+                    machine.ShowAccessories()
+                    accessory = input("Enter the index of the desired accessory: ")
+                    
+                accessory = int(accessory)
+                machine.AddAccessory(accessory)
+                print(f"{machine.GetAccessoryName(accessory)} accessory added.")
+                input("\n\nPress enter to continue...")
+                utilities.ClearConsole()
+                
+            elif accessoryOption == 2:
+                print("Choose an accessory to remove:")
+                machine.ShowAccessories()
+                accessory = input("\n\nEnter the index of the desired accessory: ")
+                while not accessory.isdigit() or int(accessory) not in range (1, machine.GetNumberOfAccessories() + 1):
+                    print("\n\nError: Please enter a valid number.")
+                    input("\n\nPress enter to continue...")
+                    utilities.ClearConsole()
+                    machine.ShowAccessories()
+                    accessory = input("Enter the index of the desired accessory: ")
+                    
+                accessory = int(accessory)
+                machine.RemoveAccessory(accessory)
+                print(f"{machine.GetAccessoryName(accessory)} accessory removed.")
+                input("\n\nPress enter to continue...")
+                utilities.ClearConsole()
+                
+            elif accessoryOption == 3:
+                print("Current accessories in the machine:\n")
+                machine.ShowAccessories()
+                input("\n\nPress enter to continue...")
+                utilities.ClearConsole()
+                
+            elif accessoryOption == 4:
+                utilities.ClearConsole()
+                continue
+                
+                
         elif option == 4:
             print("Choose the memory for the arcade machine:\n\n-1. 250GB.\n-2. 500GB.\n-3. 1TB.")
             self.machine.SetMemory(input("Enter the desired memory: "))
@@ -91,6 +184,119 @@ class main():
         elif option == 5:
             print("Choose the number of processors for the arcade machine:\n\n-1. 1.\n-2. 2.\n-3. 4.")
             self.machine.SetNumberOfProcessors(input("Enter the desired number of processors: "))
+            
+        elif option == 8:
+            pass
+        
+        elif option == 9:
+            pass
+            
+        else:
+            if isinstance(self.machine, DanceRevolutionMachine):
+                if option == 6:
+                    print("Choose the number of difficulties for the game:\n\n-1. 1.\n-2. 2.\n-3. 3.")
+                    numberofdifficulties = input("Enter the desired number of difficulties: ")
+                    while not numberofdifficulties.isdigit() or int(numberofdifficulties) not in range(1, 4):
+                        print("\n\nError: Please enter a valid number.")
+                        input("\n\nPress enter to continue...")
+                        utilities.ClearConsole()
+                        print("Choose the number of difficulties for the game:\n\n-1. 1.\n-2. 2.\n-3. 3.")
+                        numberofdifficulties = input("Enter the desired number of difficulties: ")
+                        
+                    self.machine.SetNumberOfDifficulties(numberofdifficulties)
+                    print(f"\n\nThe number of difficulties has been set to {numberofdifficulties}... Press enter to continue.")
+                    input()
+                    utilities.ClearConsole()
+                
+                elif option == 7:
+                    print("Choose the number of arrow cardinalities for the game:\n\n-1. 4.\n-2. 8.\n")
+                    numberofarrowcardinalities = input("Enter the desired number of arrow cardinalities: ")
+                    while not numberofarrowcardinalities.isdigit() or int(numberofarrowcardinalities) == 4 or int(numberofarrowcardinalities) == 8:
+                        print("\n\nError: Please enter a valid number.")
+                        input("\n\nPress enter to continue...")
+                        utilities.ClearConsole()
+                        print("Choose the number of arrow cardinalities for the game:\n\n-1. 4.\n-2. 8.\n")
+                        numberofarrowcardinalities = input("Enter the desired number of arrow cardinalities: ")
+                        
+                    self.machine.SetNumberOfArrowCardinalities(numberofarrowcardinalities)
+                    print(f"\n\nThe number of arrow cardinalities has been set to {numberofarrowcardinalities}... Press enter to continue.")
+                    input()
+                    utilities.ClearConsole()
+                    
+            elif isinstance(self.machine, ClassicalArcadeMachine):
+                if option == 6:
+                    print("Choose the vibration for the machine:\n\n-1. Yes.\n-2. No.")
+                    vibration = input("Enter the desired vibration: ")
+                    while not vibration.isdigit() or int(vibration) not in range(1, 3):
+                        print("\n\nError: Please enter a valid number.")
+                        input("\n\nPress enter to continue...")
+                        utilities.ClearConsole()
+                        print("Choose the vibration for the machine:\n\n-1. Yes.\n-2. No.")
+                        vibration = input("Enter the desired vibration: ")
+                        
+                    
+                    print(f"\n\nThe vibration has been set to {'YES' if vibration == 1 else 'NO'}... Press enter to continue.")
+                    input()
+                    utilities.ClearConsole()
+                
+                elif option == 7:
+                    print("Choose the sound record alert for the machine:\n\n-1. Yes.\n-2. No.")
+                    soundrecordalert = input("Enter the desired sound record alert: ")
+                    while not soundrecordalert.isdigit() or int(soundrecordalert) not in range(1, 3):
+                        print("\n\nError: Please enter a valid number.")
+                        input("\n\nPress enter to continue...")
+                        utilities.ClearConsole()
+                        print("Choose the sound record alert for the machine:\n\n-1. Yes.\n-2. No.")
+                        soundrecordalert = input("Enter the desired sound record alert: ")
+                        
+                    self.machine.SetSoundRecordAlert(soundrecordalert)
+                    print(f"\n\nThe sound record alert has been set to {'YES' if vibration == 1 else 'NO'}... Press enter to continue.")
+                    input()
+                    utilities.ClearConsole()
+                    
+            elif isinstance(self.machine, ShottingMachine):
+                if option == 6:
+                    print("Choose the number of guns for the machine:\n\n-1. 1.\n-2. 2.\n-3. 4.")
+                    numberofguns = input("Enter the desired number of guns: ")
+                    while not numberofguns.isdigit() or int(numberofguns) == 1 or int(numberofguns) == 2 or int(numberofguns) == 4:
+                        print("\n\nError: Please enter a valid number.")
+                        input("\n\nPress enter to continue...")
+                        utilities.ClearConsole()
+                        print("Choose the number of guns for the machine:\n\n-1. 1.\n-2. 2.\n-3. 4.")
+                        numberofguns = input("Enter the desired number of guns: ")
+                        
+                    self.machine.SetNumberOfGuns(numberofguns)
+                    print(f"\n\nThe number of guns has been set to {numberofguns}... Press enter to continue.")
+                    input()
+                    utilities.ClearConsole()
+                    
+                elif option == 7:
+                    print("Choose the type of guns for the machine:\n\n-1. Pistol.\n-2. Rifle.\n-3. Shotgun.\n-4. Machine gun.")
+                    gunstype = input("Enter the desired type of guns: ")
+                    while not gunstype.isdigit() or int(gunstype) not in range(1, 5):
+                        print("\n\nError: Please enter a valid number.")
+                        input("\n\nPress enter to continue...")
+                        utilities.ClearConsole()
+                        print("Choose the type of guns for the machine:\n\n-1. Pistol.\n-2. Rifle.\n-3. Shotgun.\n-4. Machine gun.")
+                        gunstype = input("Enter the desired type of guns: ")
+                        
+                    gun_types = {
+                        1: "Pistol",
+                        2: "Rifle",
+                        3: "Shotgun",
+                        4: "Machine gun"
+                    }
+                    
+                    self.machine.SetGunsType(gunstype)
+                    
+                    gun_name = gun_types.get(gunstype, "Unknown")
+                    
+                    print(f"\n\nThe type of guns has been set to {gun_name}... Press enter to continue.")
+                    input()
+                    utilities.ClearConsole()
+                
+            elif isinstance(self.machine, RacingMachine):
+                
         
         
 def run():
