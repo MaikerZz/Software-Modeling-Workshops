@@ -14,6 +14,7 @@ of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Publ
 You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>."""
 
 import os
+from typing import List
 class ArcadeMachine ():
         """
         It represents an arcade video game machine. It allows selecting materials, adding games, 
@@ -21,16 +22,17 @@ class ArcadeMachine ():
         """
         
         def __init__(self): 
+                self.machine_type = None
                 self.material = None
-                self.gamesadded = []
-                self.extraaccesories = ExtraAccesories()
                 self.dimensions = []
-                self.weight = 0
-                self.energyconsumption = 0
+                self.gamesadded = []
+                self.weight = 100
+                self.energyconsumption = 300
                 self.memory = None
                 self.processors = None
                 self.base_price = 0
                 self.color = None
+                self.dimensions = []
         
         def  SelectMaterial (self, material: str):
                 """
@@ -135,7 +137,7 @@ class ArcadeMachine ():
             Returns:
             None.
             """
-            self.extraaccesories.AddAccessory(accessory)
+            self.extraAccesories.AddAccessory(accessory)
                 
         def RemoveAccessory(self, accessory: str):
             """
@@ -156,7 +158,7 @@ class ArcadeMachine ():
             Returns:
             None.
             """
-            self.extraaccesories.ShowAccessories()
+            self.extraAccesories.ShowAccessories()
                 
         def GetNumberOfAccessories(self):
             """
@@ -180,7 +182,7 @@ class ArcadeMachine ():
             return self.extraaccesories.accessories[index - 1]
             
             
-        def SetEnergyConsumption(self, energyconsumption: float):
+        def SetEnergyConsumption(self, material: str):
             """
             This method sets the energy consumption of the arcade machine.
             
@@ -190,10 +192,19 @@ class ArcadeMachine ():
             Returns:
             None.
             """
-            while energyconsumption < 0:
-                print("set the correct energy consumption.")
-                energyconsumption = float(input("set the energy consumption of the machine: "))
-            self.energyconsumption = energyconsumption
+            energyconsumption = self.machine.energyconsumption
+            if material == "Wood":
+                self.energyconsumption *= 1.15
+            elif material == "Carbon fiber":
+                self.energyconsumption *= 0.9
+                
+        def SetWeight(self, material: str):
+            if material == "Wood":
+                self.weight *= 1.1
+            elif material == "Aluminium":
+                self.weight *= 0.95
+            elif material == "Carbon fiber":
+                self.weight *= 0.85
             
         
         def SetMemory(self, memory: int):
@@ -224,9 +235,6 @@ class ArcadeMachine ():
             Returns:
             None.
             """
-            while processors < 0 and processors != 1 and processors != 2 and processors != 4:
-                print("Set a correct number for the processors.")
-                processors = int(input("set the number of processors of the machine: "))
             self.processors = processors
             
         
@@ -240,7 +248,16 @@ class ArcadeMachine ():
             Returns:
             None.
             """
-            self.color = color       
+            self.color = color     
+            
+        def GetNumberOfGames(self) -> int:
+            """
+            This method returns the number of games in the list.
+            
+            Returns:
+            int: The number of games in the list.
+            """
+            return len(self.gamesadded)  
                 
                 
 class DanceRevolutionMachine (ArcadeMachine):
@@ -250,6 +267,9 @@ class DanceRevolutionMachine (ArcadeMachine):
         self.difficulties = None
         self.arrowCardinalities = None
         self.controls_price = None
+        self.base_price = 3000
+        self.dimensions = [1.5, 2.5, 1.5]
+        self.weight = 200
         
     def setDifficulties(self, difficulties: int):
         """
@@ -296,8 +316,11 @@ class ClassicalArcadeMachine (ArcadeMachine):
         super().__init__()
         self.makeVibration = None
         self.soundRecordAlert = None
+        self.base_price = 2000
+        self.dimensions = [1.5, 2.5, 1.5]
+        self.weight = 250
         
-    def setMakeVibration(self, makeVibration: bool):
+    def setMakeVibration(self, makeVibration: int):
         """
         This method sets the vibration for the machine.
         
@@ -307,9 +330,12 @@ class ClassicalArcadeMachine (ArcadeMachine):
         Returns:
         None.
         """
-        self.makeVibration = makeVibration
+        if makeVibration == 1:
+            self.makeVibration = True
+        else:
+            self.makeVibration = False
         
-    def setSoundRecordAlert(self, soundRecordAlert: bool):
+    def setSoundRecordAlert(self, soundRecordAlert: int):
         """
         This method sets the sound record alert for the machine.
         
@@ -319,7 +345,10 @@ class ClassicalArcadeMachine (ArcadeMachine):
         Returns:
         None.
         """
-        self.soundRecordAlert = soundRecordAlert
+        if soundRecordAlert == 1:
+            self.soundRecordAlert = True
+        else:
+            self.soundRecordAlert = False
         
         
 class ShottingMachine (ArcadeMachine):
@@ -329,6 +358,9 @@ class ShottingMachine (ArcadeMachine):
         self.gunsNumber = None
         self.gunPrice = None
         self.gunType = None
+        self.base_price = 2500
+        self.dimensions = [1.3, 2.5, 1.2]
+        self.weight = 230
         
     def setGunsNumber (self, guns: int):
         """
@@ -373,6 +405,9 @@ class RacingMachine (ArcadeMachine):
         super().__init__()
         self.steeringWheelPrice = None
         self.steeringWheelType = None
+        self.base_price = 3200
+        self.dimensions = [2, 2.5, 2]
+        self.weight = 300
         
     def setSteeringWheelType (self, steeringWheelType: str):
         """
@@ -402,8 +437,11 @@ class VirtualRealityMachine (ArcadeMachine):
         self.glassesType = None
         self.glassesPrice = None
         self.glassesResolution = None
+        self.base_price = 3000
+        self.dimensions = [1.5, 2.5, 2]
+        self.weight = 150
         
-    def setGlassesType (self, glassesType: str):
+    def setGlassType (self, glassesType: str):
         """
         This method sets the type of glasses for the machine.
         
@@ -424,7 +462,7 @@ class VirtualRealityMachine (ArcadeMachine):
         elif glassesType == "Ultimate":
             self.glassesPrice = 200
         
-    def setGlassesResolution (self, glassesResolution: str):
+    def setGlassResolution (self, glassesResolution: str):
         """
         This method sets the resolution for the glasses between 720p, 1080p, 1440p, and 2160p.
         
@@ -434,9 +472,7 @@ class VirtualRealityMachine (ArcadeMachine):
         Returns:
         None.
         """
-        while glassesResolution != "720p" and glassesResolution != "1080p" and glassesResolution != "1440p" and glassesResolution != "2160p":
-            print("Ingrese una resolución válida.")
-            glassesResolution = input("Ingrese la resolución de las gafas: ")
+
         self.glassesResolution = glassesResolution
     
     
@@ -474,45 +510,45 @@ class GameCatalog ():
             Returns:
             None.
             """
-            
-            if isinstance(machine, DanceRevolutionMachine):
-                games = [
-                    "Dance Dance Revolution", "Pump It Up", "In The Groove", 
-                    "StepMania", "Just Dance", "Dance Central", 
-                    "ParaParaParadise", "Dance Evolution", "Dance Factory", 
-                    "Technomotion", "Dance Dance Revolution SuperNova", "Dance Dance Revolution X", 
-                    "Dance Dance Revolution Extreme", "Dance Dance Revolution A", "Dance Dance Revolution 5th Mix"
-                ]
-            elif isinstance(machine, ClassicalArcadeMachine):
-                games = [
-                    "Pac-Man", "Donkey Kong", "Space Invaders", "Galaga", "Asteroids", 
-                    "Centipede", "Defender", "Frogger", "Joust", "Missile Command", 
-                    "Q*bert", "Robotron: 2084", "Dig Dug", "BurgerTime", "Tempest"
-                ]
-            elif isinstance(machine, ShottingMachine):
-                games = [
-                    "Time Crisis", "House of the Dead", "Virtua Cop", "Silent Scope", "Point Blank", 
-                    "Lethal Enforcers", "Area 51", "Big Buck Hunter", "Operation Wolf", "Police Trainer", 
-                    "CarnEvil", "Jurassic Park Arcade", "Aliens: Extermination", "Rambo", "Ghost Squad", 
-                    "Terminator Salvation", "Mad Dog McCree"]
-            elif isinstance(machine, RacingMachine):
-                games = [
-                    "Daytona USA", "Cruis'n USA", "OutRun", "Ridge Racer", "Sega Rally Championship", 
-                    "Initial D Arcade Stage", "Mario Kart Arcade GP", "F-Zero AX", "Need for Speed: Underground", 
-                    "Hydro Thunder", "Midnight Club", "Burnout", "Crazy Taxi", "Wangan Midnight Maximum Tune", 
-                    "Fast & Furious: SuperCars"
-                ]
-            elif isinstance(machine, VirtualRealityMachine):
-                games = ["Beat Saber", "Superhot VR", "Half-Life: Alyx"
-                "Arizona Sunshine", "The Walking Dead: Saints & Sinners", "No Man's Sky VR", 
-                "Star Wars: Squadrons", "The Elder Scrolls V: Skyrim VR", "Resident Evil 7: Biohazard", 
-                "Boneworks", "Pavlov VR", "Job Simulator", "Moss", 
-                "Astro Bot Rescue Mission", "Vader Immortal"]
-            else:
-                games = []
-            
-            for game in games:
-                machine.AddGame(game)
+            if self.games == []:
+                if isinstance(machine, DanceRevolutionMachine):
+                    games = [
+                        "Dance Dance Revolution", "Pump It Up", "In The Groove", 
+                        "StepMania", "Just Dance", "Dance Central", 
+                        "ParaParaParadise", "Dance Evolution", "Dance Factory", 
+                        "Technomotion", "Dance Dance Revolution SuperNova", "Dance Dance Revolution X", 
+                        "Dance Dance Revolution Extreme", "Dance Dance Revolution A", "Dance Dance Revolution 5th Mix"
+                    ]
+                elif isinstance(machine, ClassicalArcadeMachine):
+                    games = [
+                        "Pac-Man", "Donkey Kong", "Space Invaders", "Galaga", "Asteroids", 
+                        "Centipede", "Defender", "Frogger", "Joust", "Missile Command", 
+                        "Q*bert", "Robotron: 2084", "Dig Dug", "BurgerTime", "Tempest"
+                    ]
+                elif isinstance(machine, ShottingMachine):
+                    games = [
+                        "Time Crisis", "House of the Dead", "Virtua Cop", "Silent Scope", "Point Blank", 
+                        "Lethal Enforcers", "Area 51", "Big Buck Hunter", "Operation Wolf", "Police Trainer", 
+                        "CarnEvil", "Jurassic Park Arcade", "Aliens: Extermination", "Rambo", "Ghost Squad", 
+                        "Terminator Salvation", "Mad Dog McCree"]
+                elif isinstance(machine, RacingMachine):
+                    games = [
+                        "Daytona USA", "Cruis'n USA", "OutRun", "Ridge Racer", "Sega Rally Championship", 
+                        "Initial D Arcade Stage", "Mario Kart Arcade GP", "F-Zero AX", "Need for Speed: Underground", 
+                        "Hydro Thunder", "Midnight Club", "Burnout", "Crazy Taxi", "Wangan Midnight Maximum Tune", 
+                        "Fast & Furious: SuperCars"
+                    ]
+                elif isinstance(machine, VirtualRealityMachine):
+                    games = ["Beat Saber", "Superhot VR", "Half-Life: Alyx"
+                    "Arizona Sunshine", "The Walking Dead: Saints & Sinners", "No Man's Sky VR", 
+                    "Star Wars: Squadrons", "The Elder Scrolls V: Skyrim VR", "Resident Evil 7: Biohazard", 
+                    "Boneworks", "Pavlov VR", "Job Simulator", "Moss", 
+                    "Astro Bot Rescue Mission", "Vader Immortal"]
+                else:
+                    games = []
+                
+                for game in games:
+                    self.games.append(game)
             
                         
         def FromIndextoGame(self, index: int) -> str:
@@ -530,6 +566,22 @@ class GameCatalog ():
                 """
                 
                 return self.games[index - 1]
+            
+        def FromIndextoGameAdded(self, index: int, machine: ArcadeMachine) -> str:
+                """
+                This method retrieves a game from the list based on its index.
+                
+                This method takes one argument, expected as an integer, and returns the game corresponding to that index 
+                in the list of games.
+                
+                Args:
+                  index (int): The index of the game to retrieve (1-based).
+
+                Returns:
+                  str: The game at the specified index.
+                """
+                
+                return machine.gamesadded[index - 1]
             
         def GetNumberOfGames(self) -> int:
                 """
@@ -558,89 +610,6 @@ class Customer ():
                 self.name = name
                 self.address = address
                 
-class ExtraAccesories:
-        """
-        It represents the extra accessories available for the arcade machine.
-        """
-    
-        def __init__(self):
-                self.accessories = []
-                
-        def SetAvaliableAccessories(self, machine: ArcadeMachine):
-            if isinstance (machine, DanceRevolutionMachine):
-                self.accessories = ["Headphones", "Microphone", "Speakers", "Lights"]
-                
-            elif isinstance (machine, ClassicalArcadeMachine):
-                self.accessories = ["Joystick", "Buttons", "Trackball", "Spinner"]
-                
-            elif isinstance (machine, ShottingMachine):
-                self.accessories = ["Gun holster", "Gun strap", "Gun stand", "Gun case"]
-                
-            elif isinstance (machine, RacingMachine):
-                self.accessories = ["Steering wheel", "Pedals", "Gear shifter", "Seat"]
-                
-            elif isinstance (machine, VirtualRealityMachine):
-                self.accessories = ["Gloves", "Vest", "Boots", "Helmet"]
-                
-            else:
-                self.accessories = []
-                
-            for accesory in self.accessories:
-                setattr(self, accesory.replace(" ", ""), False)
-                
-        def AddAccessory(self, accesory: str):
-            """
-            This method adds an accessory to the arcade machine.
-            
-            Args:
-            accessory (str): The name of the accessory to be added.
-            
-            Returns:
-            None.
-            """
-            if accessory in self.accessories:
-                setattr(self, accessory.replace(" ", ""), True)
-            else:
-                print(f"Accessory {accessory} is not available for this machine, please try again.")
-                input()
-                
-        def RemoveAccessory(self, accessory: str):
-            """
-            This method removes an accessory from the arcade machine.
-            
-            Args:
-            accessory (str): The name of the accessory to be removed.
-            
-            Returns:
-            None.
-            """
-            if accessory in self.accessories:
-                setattr(self, accessory.replace(" ", ""), False)
-            else:
-                print(f"Accessory {accessory} is not available for this machine, please try again.")
-                input()
-        
-        def ShowAccessories(self):
-            """
-            This method displays the current status of all accessories.
-            
-            Returns:
-            None.
-            """
-            for accessory in self.accessories:
-                print(f"{accessory}: {getattr(self, accessory.replace(' ', ''))}")
-            
-            
-            
-        def ShowAddedAccessories(self):
-            """
-            This method displays the current status of all accessories.
-            
-            Returns:
-            None.
-            """
-            for accessory in self.accessories:
-                print(f"{accessory}: {getattr(self, accessory.replace(' ', ''))}")
                 
 class Utilities ():
         def ClearConsole(self):
